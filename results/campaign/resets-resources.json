@@ -1,0 +1,9 @@
+{
+  "family": "resets",
+  "rows": 96,
+  "cpu_seconds": 0.07000192100000002,
+  "wall_seconds": 0.07000446299980467,
+  "peak_rss_kib": 93356,
+  "workers": 1,
+  "complete": true
+}

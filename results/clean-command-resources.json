@@ -1,0 +1,431 @@
+{
+  "commands": [
+    {
+      "name": "unit-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 5.601742,
+      "wall_seconds": 5.629404103999946,
+      "cumulative_peak_child_rss_kib": 100708
+    },
+    {
+      "name": "pilot-initial",
+      "command": [
+        "python",
+        "pilots/initial.py",
+        "--out",
+        "results/final-check/pilots/initial.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6662469999999999,
+      "wall_seconds": 0.7159274619999678,
+      "cumulative_peak_child_rss_kib": 100708
+    },
+    {
+      "name": "pilot-compact",
+      "command": [
+        "python",
+        "pilots/compact.py",
+        "--out",
+        "results/final-check/pilots/compact.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.8421109999999995,
+      "wall_seconds": 0.8663295830000379,
+      "cumulative_peak_child_rss_kib": 100708
+    },
+    {
+      "name": "examples",
+      "command": [
+        "python",
+        "examples.py",
+        "--out",
+        "results/final-check/examples"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6232969999999985,
+      "wall_seconds": 0.6656153549999999,
+      "cumulative_peak_child_rss_kib": 100708
+    },
+    {
+      "name": "full-campaign",
+      "command": [
+        "python",
+        "reproduce.py",
+        "--out",
+        "results/final-check/campaign"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 19.400834000000003,
+      "wall_seconds": 19.730668885,
+      "cumulative_peak_child_rss_kib": 116824
+    },
+    {
+      "name": "summarize-reproduced",
+      "command": [
+        "python",
+        "-m",
+        "bsci.summarize",
+        "--results",
+        "results/final-check/campaign",
+        "--out",
+        "results/final-check/reproduced-derived"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 1.5103709999999961,
+      "wall_seconds": 1.518338878999998,
+      "cumulative_peak_child_rss_kib": 229816
+    },
+    {
+      "name": "compare-campaign",
+      "command": [
+        "python",
+        "check_reproduction.py",
+        "--reference",
+        "results/campaign",
+        "--candidate",
+        "results/final-check/campaign",
+        "--out",
+        "results/final-check/reproduction-check.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 3.918622000000001,
+      "wall_seconds": 3.9284067160000404,
+      "cumulative_peak_child_rss_kib": 366232
+    },
+    {
+      "name": "epoch-audit",
+      "command": [
+        "python",
+        "epoch_audit.py",
+        "--out",
+        "results/final-check/epoch-audit"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6480539999999986,
+      "wall_seconds": 0.6660571249999521,
+      "cumulative_peak_child_rss_kib": 366232
+    },
+    {
+      "name": "compare-epoch",
+      "command": [
+        "python",
+        "check_epoch_audit.py",
+        "--reference",
+        "results/epoch-audit",
+        "--candidate",
+        "results/final-check/epoch-audit",
+        "--out",
+        "results/final-check/epoch-reproduction-check.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6718699999999999,
+      "wall_seconds": 0.718402441999956,
+      "cumulative_peak_child_rss_kib": 93616
+    },
+    {
+      "name": "single-family",
+      "command": [
+        "python",
+        "-m",
+        "bsci.campaign",
+        "random",
+        "--out",
+        "results/final-check/single-family"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 1.2304389999999998,
+      "wall_seconds": 1.2676142929999514,
+      "cumulative_peak_child_rss_kib": 94636
+    },
+    {
+      "name": "summarize-retained",
+      "command": [
+        "python",
+        "-m",
+        "bsci.summarize",
+        "--results",
+        "results/campaign",
+        "--out",
+        "results/final-check/retained-derived"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 1.7059689999999998,
+      "wall_seconds": 1.7188362690000076,
+      "cumulative_peak_child_rss_kib": 229824
+    },
+    {
+      "name": "certify-case-001",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "certify",
+        "inputs/case-001.json",
+        "--out",
+        "results/final-check/cli/case-001.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6149350000000005,
+      "wall_seconds": 0.615342749999968,
+      "cumulative_peak_child_rss_kib": 229824
+    },
+    {
+      "name": "verify-case-001",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify",
+        "inputs/case-001.json",
+        "--packet",
+        "results/final-check/cli/case-001.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6137130000000002,
+      "wall_seconds": 0.6157161049999331,
+      "cumulative_peak_child_rss_kib": 229824
+    },
+    {
+      "name": "certify-case-002",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "certify",
+        "inputs/case-002.json",
+        "--out",
+        "results/final-check/cli/case-002.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6297299999999995,
+      "wall_seconds": 0.665758766999943,
+      "cumulative_peak_child_rss_kib": 229824
+    },
+    {
+      "name": "verify-case-002",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify",
+        "inputs/case-002.json",
+        "--packet",
+        "results/final-check/cli/case-002.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6526849999999996,
+      "wall_seconds": 0.66674802,
+      "cumulative_peak_child_rss_kib": 229824
+    },
+    {
+      "name": "replay-case-001",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "replay",
+        "inputs/case-001.json",
+        "--packet",
+        "results/final-check/cli/case-001.json",
+        "--out",
+        "results/final-check/cli/trace.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.608088,
+      "wall_seconds": 0.6157543439999245,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "universal-one",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "universal",
+        "inputs/case-003.json",
+        "--k",
+        "1",
+        "--out",
+        "results/final-check/cli/budget-one.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6417529999999999,
+      "wall_seconds": 0.6660393019999447,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "verify-universal-one",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify-universal",
+        "inputs/case-003.json",
+        "--k",
+        "1",
+        "--packet",
+        "results/final-check/cli/budget-one.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.625205,
+      "wall_seconds": 0.6657810120000249,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "reject-budget-mismatch",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify-universal",
+        "inputs/case-003.json",
+        "--k",
+        "2",
+        "--packet",
+        "results/final-check/cli/budget-one.json"
+      ],
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "passed": true,
+      "cpu_seconds": 0.6046639999999999,
+      "wall_seconds": 0.6156675460000542,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "reject-missing-budget",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify-universal",
+        "inputs/case-003.json",
+        "--packet",
+        "results/final-check/cli/budget-one.json"
+      ],
+      "expected_exit": 2,
+      "observed_exit": 2,
+      "passed": true,
+      "cpu_seconds": 0.6160399999999999,
+      "wall_seconds": 0.6658158879999974,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "certify-selected",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "certify",
+        "inputs/case-003.json",
+        "--optional",
+        "results/final-check/cli/optional.json",
+        "--out",
+        "results/final-check/cli/selected.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6262420000000004,
+      "wall_seconds": 0.6656334570000126,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "verify-selected",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify",
+        "inputs/case-003.json",
+        "--optional",
+        "results/final-check/cli/optional.json",
+        "--packet",
+        "results/final-check/cli/selected.json"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true,
+      "cpu_seconds": 0.6274350000000004,
+      "wall_seconds": 0.6658142909999469,
+      "cumulative_peak_child_rss_kib": 96300
+    },
+    {
+      "name": "reject-pattern-mismatch",
+      "command": [
+        "python",
+        "-m",
+        "bsci",
+        "verify",
+        "inputs/case-003.json",
+        "--packet",
+        "results/final-check/cli/selected.json"
+      ],
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "passed": true,
+      "cpu_seconds": 0.5702800000000007,
+      "wall_seconds": 0.6155574040000147,
+      "cumulative_peak_child_rss_kib": 96300
+    }
+  ],
+  "workers": 1,
+  "completed_session_resources": [
+    {
+      "runner_cpu_seconds": 0.012893897000000099,
+      "wall_seconds": 7.879289298999993
+    },
+    {
+      "runner_cpu_seconds": 0.041737996999999916,
+      "wall_seconds": 25.84602922399995
+    },
+    {
+      "runner_cpu_seconds": 0.01868803199999991,
+      "wall_seconds": 6.274477133999994
+    }
+  ]
+}

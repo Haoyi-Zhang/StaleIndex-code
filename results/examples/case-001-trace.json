@@ -1,0 +1,55 @@
+{
+  "answer": -1,
+  "answers": [
+    -1
+  ],
+  "payloads": [
+    0
+  ],
+  "trace": [
+    {
+      "time": 0,
+      "values": [
+        0,
+        -1
+      ],
+      "reset": [],
+      "arrivals": [],
+      "sends": [
+        0
+      ],
+      "queries": []
+    },
+    {
+      "time": 1,
+      "values": [
+        1,
+        0
+      ],
+      "reset": [],
+      "arrivals": [
+        0
+      ],
+      "sends": [],
+      "queries": []
+    },
+    {
+      "time": 2,
+      "values": [
+        2,
+        -1
+      ],
+      "reset": [
+        1
+      ],
+      "arrivals": [],
+      "sends": [],
+      "queries": [
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

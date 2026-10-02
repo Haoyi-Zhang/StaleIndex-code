@@ -1,0 +1,9 @@
+{
+  "family": "fixed",
+  "rows": 256,
+  "cpu_seconds": 0.379525698,
+  "wall_seconds": 0.37971809900000153,
+  "peak_rss_kib": 93712,
+  "workers": 1,
+  "complete": true
+}

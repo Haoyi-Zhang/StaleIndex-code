@@ -1,0 +1,13 @@
+{
+  "compression_cases": 240,
+  "oracle_executions": 3457,
+  "star_cases": 36,
+  "star_reset_sets": 2052,
+  "star_executions": 32832,
+  "mismatches": 0,
+  "cpu_seconds": 0.2443611739999999,
+  "wall_seconds": 0.24457990899986726,
+  "peak_rss_kib": 93232,
+  "workers": 1,
+  "seed": 86231
+}

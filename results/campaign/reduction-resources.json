@@ -1,0 +1,9 @@
+{
+  "family": "reduction",
+  "rows": 1099,
+  "cpu_seconds": 4.9111554989999995,
+  "wall_seconds": 4.91784915900007,
+  "peak_rss_kib": 94632,
+  "workers": 1,
+  "complete": true
+}

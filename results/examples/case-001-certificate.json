@@ -1,0 +1,14 @@
+{
+  "safe": false,
+  "optional": [],
+  "arrivals": [
+    1
+  ],
+  "stats": {
+    "points": 4,
+    "auxiliary": 2,
+    "rules": 4,
+    "incidences": 6,
+    "marked_points": 1
+  }
+}

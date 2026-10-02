@@ -1,0 +1,9 @@
+{
+  "family": "random",
+  "rows": 3200,
+  "cpu_seconds": 0.4292643239999999,
+  "wall_seconds": 0.429298192999795,
+  "peak_rss_kib": 94380,
+  "workers": 1,
+  "complete": true
+}

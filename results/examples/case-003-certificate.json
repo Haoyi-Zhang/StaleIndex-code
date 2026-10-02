@@ -1,0 +1,47 @@
+{
+  "safe": true,
+  "optional": [],
+  "steps": [
+    [
+      1,
+      2,
+      "query"
+    ],
+    [
+      2,
+      2,
+      "query"
+    ],
+    [
+      1,
+      1,
+      "mem",
+      2
+    ],
+    [
+      2,
+      1,
+      "mem",
+      2
+    ],
+    [
+      1,
+      0,
+      "mem",
+      1
+    ],
+    [
+      0,
+      0,
+      "msg",
+      0
+    ]
+  ],
+  "stats": {
+    "points": 7,
+    "auxiliary": 4,
+    "rules": 10,
+    "incidences": 14,
+    "marked_points": 7
+  }
+}

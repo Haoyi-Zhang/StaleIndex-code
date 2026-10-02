@@ -1,0 +1,71 @@
+{
+  "random": {
+    "instances": 3200,
+    "patterns": 3200,
+    "oracle_patterns": 3200,
+    "arrival_executions": 9174,
+    "oracle_safe": 1035,
+    "safe": 1035
+  },
+  "overlay": {
+    "instances": 256,
+    "patterns": 256,
+    "oracle_patterns": 256,
+    "arrival_executions": 1296,
+    "oracle_safe": 39,
+    "safe": 39
+  },
+  "resets": {
+    "instances": 96,
+    "patterns": 712,
+    "oracle_patterns": 712,
+    "arrival_executions": 1810,
+    "oracle_safe": 187,
+    "universally_safe": 30
+  },
+  "reduction": {
+    "instances": 1099,
+    "patterns": 33866,
+    "oracle_patterns": 1098,
+    "arrival_executions": 11894,
+    "oracle_safe": 499
+  },
+  "fixed": {
+    "instances": 256,
+    "patterns": 4093,
+    "oracle_patterns": 4093,
+    "arrival_executions": 4093,
+    "oracle_safe": 1332,
+    "universally_safe": 89
+  },
+  "direct": {
+    "instances": 72,
+    "patterns": 3894,
+    "oracle_patterns": 3894,
+    "arrival_executions": 15311,
+    "oracle_safe": 2079,
+    "universally_safe": 37
+  },
+  "periodic": {
+    "instances": 48,
+    "patterns": 384,
+    "oracle_patterns": 96,
+    "arrival_executions": 16448,
+    "oracle_safe": 76,
+    "universally_safe": 35
+  },
+  "phases": {
+    "settings": 1176,
+    "both_finite": 792,
+    "strict_finite_improvement": 557,
+    "synchronous_infinite_optimized_finite": 25,
+    "both_infinite": 359,
+    "candidate_multisets": 53508
+  },
+  "resources": {
+    "total_cpu_seconds": 7.494576154,
+    "peak_rss_kib": 116032,
+    "workers": 1
+  },
+  "full_oracle_arrival_executions": 60026
+}

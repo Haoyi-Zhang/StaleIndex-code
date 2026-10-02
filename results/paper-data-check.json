@@ -1,0 +1,38 @@
+{
+  "all_four_csv_files_equal": true,
+  "files": [
+    {
+      "paper_data": "paper/figures/scaling-events.csv",
+      "artifact_data": "results/derived/scaling-events.csv",
+      "byte_equal": true
+    },
+    {
+      "paper_data": "paper/figures/scaling-time.csv",
+      "artifact_data": "results/derived/scaling-time.csv",
+      "byte_equal": true
+    },
+    {
+      "paper_data": "paper/figures/scaling.csv",
+      "artifact_data": "results/derived/scaling.csv",
+      "byte_equal": true
+    },
+    {
+      "paper_data": "paper/figures/phase-slice.csv",
+      "artifact_data": "results/derived/phase-slice.csv",
+      "byte_equal": true
+    }
+  ],
+  "full_oracle_arrival_executions": 60026,
+  "phase_candidate_multisets": 53508,
+  "phase_settings": 1176,
+  "phase_outcomes_in_table_order": [
+    557,
+    235,
+    25,
+    359
+  ],
+  "scope": "Project-level comparison of paper plot data against retained artifact-derived files, plus displayed aggregate counts. The standalone validation regenerates those derived files. No hashes or toolchain fingerprint are used.",
+  "reproduced_derived_scientific_fields_equal": true,
+  "current_unique_unit_tests": 86,
+  "clean_command_checks": 23
+}

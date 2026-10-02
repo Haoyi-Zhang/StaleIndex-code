@@ -1,0 +1,34 @@
+{
+  "initial": {
+    "random_instances": 160,
+    "delay_executions": 13037,
+    "gadget_subsets": 1098,
+    "mismatches": 0,
+    "cpu_seconds": 0.08308054700000006,
+    "wall_seconds": 0.08308098999998492,
+    "peak_rss_kib": 93612,
+    "workers": 1,
+    "seed": 5741,
+    "negative_control": {
+      "early_value": -1,
+      "late_value": 0,
+      "arrival_early": 1,
+      "arrival_late": 2,
+      "reset_time": 2
+    },
+    "projection": "Full oracle campaign 3200 small schedules; all 1099 simple graphs on 1..5 vertices and all 33866 vertex subsets; one worker, conservative <300 CPU seconds estimate from pilot."
+  },
+  "compact": {
+    "compression_cases": 240,
+    "oracle_executions": 3457,
+    "star_cases": 36,
+    "star_reset_sets": 2052,
+    "star_executions": 32832,
+    "mismatches": 0,
+    "cpu_seconds": 0.25253997899999997,
+    "wall_seconds": 0.2525388889999931,
+    "peak_rss_kib": 93612,
+    "workers": 1,
+    "seed": 86231
+  }
+}

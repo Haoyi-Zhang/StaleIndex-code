@@ -1,0 +1,9 @@
+{
+  "family": "direct",
+  "rows": 72,
+  "cpu_seconds": 0.17753731100000014,
+  "wall_seconds": 0.17759531000001516,
+  "peak_rss_kib": 93864,
+  "workers": 1,
+  "complete": true
+}

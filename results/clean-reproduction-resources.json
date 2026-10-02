@@ -1,0 +1,88 @@
+{
+  "families": [
+    {
+      "family": "random",
+      "rows": 3200,
+      "cpu_seconds": 0.4906048330000001,
+      "wall_seconds": 0.49061973400000625,
+      "peak_rss_kib": 94384,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "overlay",
+      "rows": 256,
+      "cpu_seconds": 0.025202155999999976,
+      "wall_seconds": 0.025242583000022023,
+      "peak_rss_kib": 94000,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "resets",
+      "rows": 96,
+      "cpu_seconds": 0.13392398100000003,
+      "wall_seconds": 0.1339246439999897,
+      "peak_rss_kib": 94384,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "reduction",
+      "rows": 1099,
+      "cpu_seconds": 5.116028325,
+      "wall_seconds": 5.119314536000047,
+      "peak_rss_kib": 95404,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "fixed",
+      "rows": 256,
+      "cpu_seconds": 0.412234333,
+      "wall_seconds": 0.41239271400002053,
+      "peak_rss_kib": 94768,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "direct",
+      "rows": 72,
+      "cpu_seconds": 0.26075760400000003,
+      "wall_seconds": 0.2609269069999982,
+      "peak_rss_kib": 94768,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "periodic",
+      "rows": 48,
+      "cpu_seconds": 0.319025722,
+      "wall_seconds": 0.31902347599998393,
+      "peak_rss_kib": 94332,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "phases",
+      "rows": 1176,
+      "cpu_seconds": 0.428922394,
+      "wall_seconds": 0.4289274259999729,
+      "peak_rss_kib": 93876,
+      "workers": 1,
+      "complete": true
+    },
+    {
+      "family": "scaling",
+      "rows": 55,
+      "cpu_seconds": 0.8378557280000001,
+      "wall_seconds": 0.8378833109999277,
+      "peak_rss_kib": 116824,
+      "workers": 1,
+      "complete": true
+    }
+  ],
+  "total_cpu_seconds": 8.024555076,
+  "max_child_peak_rss_kib": 116824,
+  "workers": 1
+}

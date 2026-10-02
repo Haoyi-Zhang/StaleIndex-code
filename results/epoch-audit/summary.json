@@ -1,0 +1,48 @@
+{
+  "cases": 96,
+  "reset_patterns": 200,
+  "arrival_assignments": 432,
+  "single_postponements": 250,
+  "canonicalizations": 432,
+  "stale_canonicalizations": 239,
+  "all_pointwise_checks_passed": true,
+  "negative_control": {
+    "instance": {
+      "n": 2,
+      "horizon": 2,
+      "cutoff": 0,
+      "messages": [
+        [
+          0,
+          1,
+          0,
+          1,
+          2
+        ]
+      ],
+      "queries": [
+        [
+          1,
+          2
+        ]
+      ],
+      "mandatory": [
+        [
+          1,
+          2
+        ]
+      ],
+      "candidates": []
+    },
+    "early_arrivals": [
+      1
+    ],
+    "late_arrivals": [
+      2
+    ],
+    "early_answer": -1,
+    "late_answer": 0,
+    "distinguishes_reset_boundary": true
+  },
+  "scope": "Finite validation of written arguments; separate from the original nine-family campaign."
+}

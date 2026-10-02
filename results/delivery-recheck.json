@@ -1,0 +1,17 @@
+{
+  "clean_archive_extraction": true,
+  "scientific_python_source_files": 28,
+  "all_scientific_python_sources_equal_to_complete_clean_validation": true,
+  "final_unique_unit_tests": 86,
+  "final_unit_tests_exit": 0,
+  "final_unit_cpu_seconds": 8.517232,
+  "bibliography_local_checks_passed": true,
+  "references": 31,
+  "main_pages": 12,
+  "supplement_pages": 3,
+  "all_page_renders_equal": true,
+  "scope": "Final archive-extraction source, tests, bibliography and paper rebuild check. The complete 23-command scientific reproduction is recorded in clean-validation.json. No hashes or toolchain fingerprints are generated.",
+  "final_test_and_comparison_wall_seconds": 6.011246634999907,
+  "cumulative_peak_child_rss_kib": 116480,
+  "resource_note": "CPU difference brackets only the unit command; subsequent local pixel/source comparisons are not experimental kernels."
+}

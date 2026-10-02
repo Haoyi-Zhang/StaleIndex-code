@@ -1,0 +1,6 @@
+{
+  "cases": 3,
+  "individual_query_checks": 2,
+  "aggregate_budget_checks": 2,
+  "all_passed": true
+}

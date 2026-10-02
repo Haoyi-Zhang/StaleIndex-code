@@ -1,0 +1,9 @@
+{
+  "family": "scaling",
+  "rows": 55,
+  "cpu_seconds": 0.840830377,
+  "wall_seconds": 0.8415771410000161,
+  "peak_rss_kib": 116032,
+  "workers": 1,
+  "complete": true
+}

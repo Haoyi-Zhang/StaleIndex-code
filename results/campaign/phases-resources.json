@@ -1,0 +1,9 @@
+{
+  "family": "phases",
+  "rows": 1176,
+  "cpu_seconds": 0.3837959099999999,
+  "wall_seconds": 0.3838059790000443,
+  "peak_rss_kib": 92840,
+  "workers": 1,
+  "complete": true
+}

@@ -1,0 +1,101 @@
+{
+  "safe": true,
+  "rule": {
+    "kind": "cardinality",
+    "k": 1
+  },
+  "certificates": [
+    {
+      "safe": true,
+      "optional": [
+        [
+          1,
+          2
+        ]
+      ],
+      "steps": [
+        [
+          1,
+          2,
+          "query"
+        ],
+        [
+          2,
+          2,
+          "query"
+        ],
+        [
+          2,
+          1,
+          "mem",
+          2
+        ],
+        [
+          2,
+          0,
+          "mem",
+          1
+        ],
+        [
+          0,
+          0,
+          "msg",
+          1
+        ]
+      ],
+      "stats": {
+        "points": 7,
+        "auxiliary": 4,
+        "rules": 9,
+        "incidences": 13,
+        "marked_points": 5
+      }
+    },
+    {
+      "safe": true,
+      "optional": [
+        [
+          2,
+          2
+        ]
+      ],
+      "steps": [
+        [
+          1,
+          2,
+          "query"
+        ],
+        [
+          2,
+          2,
+          "query"
+        ],
+        [
+          1,
+          1,
+          "mem",
+          2
+        ],
+        [
+          1,
+          0,
+          "mem",
+          1
+        ],
+        [
+          0,
+          0,
+          "msg",
+          0
+        ]
+      ],
+      "stats": {
+        "points": 7,
+        "auxiliary": 4,
+        "rules": 9,
+        "incidences": 13,
+        "marked_points": 5
+      }
+    }
+  ]
+}

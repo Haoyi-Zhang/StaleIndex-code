@@ -1,0 +1,32 @@
+{
+  "safe": false,
+  "rule": {
+    "kind": "cardinality",
+    "k": 2
+  },
+  "certificate": {
+    "safe": false,
+    "optional": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "arrivals": [
+      1,
+      1
+    ],
+    "stats": {
+      "points": 7,
+      "auxiliary": 4,
+      "rules": 8,
+      "incidences": 12,
+      "marked_points": 2
+    }
+  },
+  "minimal_optional_count": 2
+}

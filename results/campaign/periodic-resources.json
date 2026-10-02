@@ -1,0 +1,9 @@
+{
+  "family": "periodic",
+  "rows": 48,
+  "cpu_seconds": 0.2818239269999999,
+  "wall_seconds": 0.2819939460000569,
+  "peak_rss_kib": 93480,
+  "workers": 1,
+  "complete": true
+}
