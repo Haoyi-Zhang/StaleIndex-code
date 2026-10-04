@@ -109,7 +109,7 @@ A rolling budget counts optional erasures globally across replicas, not an unava
 
 All experimental inputs are original synthetic instances; no external data acquisition is needed for reproduction. Scholarly resources and exact read representations are recorded in `external_resources.csv`, `literature-boundary.md`, and the 31-entry `bibliography-audit.csv`; `bibliography-audit.md` states the reading and publication-status boundaries. Scholarly papers are not redistributed. `LICENSE` and `licenses/NOTICE.md` describe permissions and attribution. No invented repository URL is supplied.
 
-The written proofs, finite checks, measurements, second verifier, and clean-copy rerun are different kinds of evidence. None constitutes independent external review. Substantive AI assistance is disclosed in the notice. Human authors must validate authorship, responsibility, and publisher requirements before any external use.
+The written proofs, finite checks, measurements, second verifier and clean-copy rerun are different kinds of evidence. None constitutes independent external review.
 
 ## Exact periodic-helper inputs
 
