@@ -14,6 +14,8 @@ python validate.py --out results/validation-run
 
 This command runs the suite, both pilots, all nine campaign families, the separate epoch audit, examples, documented CLI paths, and expected-failure controls. It compares deterministic records, regenerates the retained tables, and compares newly reproduced derived data after excluding only declared resource/timing observations. JSON scientific comparisons preserve types, so `true`, `1` and `1.0` are not interchangeable. It refuses existing output directories and does not overwrite the reference results. Its summary, actual command exits, resources and logs are in the selected directory. Assertions must be enabled; optimized Python validation is refused. The standalone check does not compile or inspect the manuscript.
 
+`scientific-checks.yml` schedules this check from the flat artifact repository root on Ubuntu 24.04, with a 20-minute whole-command wall limit, 4 GiB address-space cap, and raw-output upload on both success and failure. Preparing the workflow is not evidence of a completed CI run.
+
 For tools with a short execution window, use bounded batches. Exit status 3 means an incomplete checkpoint, not a pass. Resume only while the source and reference inputs are unchanged; the checkpoint validates command order, expected exits and logs, but is not a content-attestation mechanism. The following four invocations completed the clean validation used here:
 
 ```sh
@@ -92,6 +94,8 @@ For the Python API, always bind the requested assertion: `verify(ins, packet, ex
 ## Supplemental epoch audit
 
 `epoch-audit-specification.md` fixes a separate 96-case selection before execution. `epoch_audit.py` compares every node at every slot under single-packet same-epoch postponement and joint canonicalization, using a literal scalar history implementation. The retained audit checks 200 reset patterns, 432 arrival assignments, 250 individual postponements and 432 canonicalizations (239 with a stale batch); a cross-reset negative control distinguishes the invalid unrestricted rule. `check_epoch_audit.py` compares all scientific records and summaries, excluding the separate resource observations. These finite checks supplement, but do not change, the frozen nine-family campaign or its 60,026 execution denominator. The unit suite has 86 tests: 29 original checks, 13 claim-binding/type/CLI regressions, nine exact phase-domain and iterable regressions, six validation-wrapper controls, eleven immutable-instance-input regressions, seven type-preserving evidence-comparison controls, and eleven one-shot reset-capture regressions.
+
+The preceding 86-test count and the retained Linux validation reports are historical. The current source adds one provenance-table regression for the published identity of *Robust Temporal Cut*, giving 87 tests. This addition does not change campaign inputs, scientific denominators, or timing plots.
 
 ## Scientific map
 
