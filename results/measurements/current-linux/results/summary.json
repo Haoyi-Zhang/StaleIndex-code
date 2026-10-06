@@ -1,0 +1,115 @@
+{
+  "all_checks_passed": true,
+  "commands": 23,
+  "unique_unit_tests": 87,
+  "unit_execution_note": "The same suite also runs inside reproduce.py; not additional unique tests.",
+  "pilots": {
+    "initial": {
+      "non_observational_fields_equal": true,
+      "excluded_fields": [
+        "cpu_seconds",
+        "peak_rss_kib",
+        "projection",
+        "wall_seconds"
+      ],
+      "candidate_observations": {
+        "random_instances": 160,
+        "delay_executions": 13037,
+        "gadget_subsets": 1098,
+        "mismatches": 0,
+        "cpu_seconds": 0.1947278,
+        "wall_seconds": 0.19532134999998618,
+        "peak_rss_kib": 15180,
+        "workers": 1,
+        "seed": 5741,
+        "negative_control": {
+          "early_value": -1,
+          "late_value": 0,
+          "arrival_early": 1,
+          "arrival_late": 2,
+          "reset_time": 2
+        },
+        "projection": "Full oracle campaign 3200 small schedules; all 1099 simple graphs on 1..5 vertices and all 33866 vertex subsets; one worker, conservative <300 CPU seconds estimate from pilot."
+      }
+    },
+    "compact": {
+      "non_observational_fields_equal": true,
+      "excluded_fields": [
+        "cpu_seconds",
+        "peak_rss_kib",
+        "projection",
+        "wall_seconds"
+      ],
+      "candidate_observations": {
+        "compression_cases": 240,
+        "oracle_executions": 3457,
+        "star_cases": 36,
+        "star_reset_sets": 2052,
+        "star_executions": 32832,
+        "mismatches": 0,
+        "cpu_seconds": 0.461870525,
+        "wall_seconds": 0.46212431499999695,
+        "peak_rss_kib": 15180,
+        "workers": 1,
+        "seed": 86231
+      }
+    }
+  },
+  "examples_equal": [
+    "case-001-certificate.json",
+    "case-001-trace.json",
+    "case-002-certificate.json",
+    "case-002-individual-0.json",
+    "case-002-individual-1.json",
+    "case-002-short-derivation.json",
+    "case-003-budget-one.json",
+    "case-003-budget-two.json",
+    "case-003-certificate.json",
+    "checks.json"
+  ],
+  "retained_derived_files_equal": [
+    "phase-design.csv",
+    "phase-slice.csv",
+    "scaling-events.csv",
+    "scaling-time.csv",
+    "scaling.csv",
+    "summary.json"
+  ],
+  "reproduced_derived_scientific_comparison": {
+    "files": [
+      "phase-design.csv",
+      "phase-slice.csv",
+      "scaling-events.csv",
+      "scaling-time.csv",
+      "scaling.csv",
+      "summary.json"
+    ],
+    "all_scientific_fields_equal": true,
+    "excluded_summary_fields": [
+      "resources"
+    ],
+    "excluded_scaling_columns": [
+      "producer_cpu_error_minus",
+      "producer_cpu_error_plus",
+      "producer_cpu_max_ms",
+      "producer_cpu_median_ms",
+      "producer_cpu_min_ms",
+      "verifier_cpu_error_minus",
+      "verifier_cpu_error_plus",
+      "verifier_cpu_max_ms",
+      "verifier_cpu_median_ms",
+      "verifier_cpu_min_ms"
+    ]
+  },
+  "campaign_deterministic_equal": true,
+  "epoch_scientific_equal": true,
+  "single_family_equal": true,
+  "python_rolling_and_minimum_examples_passed": true,
+  "child_command_cpu_seconds": 23.557268,
+  "runner_cpu_seconds": 0.08096160799999999,
+  "active_session_wall_seconds": 24.843718050999996,
+  "peak_child_rss_kib": 287276,
+  "workers": 1,
+  "resumed": false,
+  "scope": "Offline execution and exact record checks in a fresh output directory. Not a proof assistant, deployment evaluation, or independent research review."
+}

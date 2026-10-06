@@ -1,0 +1,58 @@
+{
+  "families": [
+    {
+      "family": "random",
+      "rows": 3200,
+      "deterministic_equal": true
+    },
+    {
+      "family": "overlay",
+      "rows": 256,
+      "deterministic_equal": true
+    },
+    {
+      "family": "resets",
+      "rows": 96,
+      "deterministic_equal": true
+    },
+    {
+      "family": "reduction",
+      "rows": 1099,
+      "deterministic_equal": true
+    },
+    {
+      "family": "fixed",
+      "rows": 256,
+      "deterministic_equal": true
+    },
+    {
+      "family": "direct",
+      "rows": 72,
+      "deterministic_equal": true
+    },
+    {
+      "family": "periodic",
+      "rows": 48,
+      "deterministic_equal": true
+    },
+    {
+      "family": "phases",
+      "rows": 1176,
+      "deterministic_equal": true
+    },
+    {
+      "family": "scaling",
+      "rows": 55,
+      "deterministic_equal": true
+    }
+  ],
+  "all_deterministic_records_equal": true,
+  "excluded_scaling_observation_fields": [
+    "process_peak_rss_kib",
+    "producer_cpu",
+    "producer_wall",
+    "verifier_cpu",
+    "verifier_wall"
+  ],
+  "scope": "Exact record comparison; not an unbounded proof or independent external review"
+}

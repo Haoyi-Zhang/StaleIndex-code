@@ -127,5 +127,7 @@ The phase-interface regressions address an input-contract defect, not a new theo
 
 `bsci/evidence.py` contains type-preserving result comparison and the explicit derived-data exclusion list. Original timing plots continue to use retained observations. A new timing measurement is neither required to equal the old one nor silently substituted into the paper.
 
+A current Ubuntu 24.04 execution passes all 87 unit tests and 23 documented commands. All 6,258 campaign rows, six derived scientific files and the 96-case epoch audit reproduce, excluding only the declared resource observations. The whole run takes 24.843718 wall seconds and 23.557268 child CPU seconds with 287,276 KiB peak child RSS and one worker. Current raw summaries and test output are in `results/measurements/current-linux/`, separate from historical plots.
+
 
 Certificate producers, fixed-pattern and aggregate verifiers, and the exhaustive oracle capture each finite optional-reset iterable before reusing it. Nested one-shot pairs are normalized to immutable tuples. Coverage checks and proof replay therefore use the same reset pattern, and every arrival assignment in an exhaustive call uses that pattern. A caller reusing an already consumed generator in a separate API call must instead provide a new iterable or retain a tuple. The JSON certificate format remains unchanged. `tests/test_reset_capture.py` includes a two-node false-acceptance control and a one-edge gadget whose second enumerated arrival assignment is stale; these are finite interface regressions, not new campaign samples.
