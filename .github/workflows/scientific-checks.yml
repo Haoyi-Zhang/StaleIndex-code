@@ -16,6 +16,7 @@ jobs:
     env:
       PYTHONUTF8: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      MIN_EXPECTED_PYTHON_SOURCES: '30'
       PYTHONOPTIMIZE: ''
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
@@ -39,7 +40,7 @@ jobs:
           timeout --signal=TERM --kill-after=10s 20m bash -euo pipefail -c '
             python -B .github/scripts/check_repository.py
             python -B validate.py --out "$RUNNER_TEMP/p068-science/results"
-            python -B -c "import json, os, pathlib; p = pathlib.Path(os.environ[\"RUNNER_TEMP\"]) / \"p068-science/results/summary.json\"; s = json.loads(p.read_text()); assert s[\"all_checks_passed\"] is True; assert s[\"unique_unit_tests\"] >= 87; assert s[\"campaign_deterministic_equal\"] is True; assert s[\"epoch_scientific_equal\"] is True"
+            python -B -c "import json, os, pathlib; p = pathlib.Path(os.environ[\"RUNNER_TEMP\"]) / \"p068-science/results/summary.json\"; s = json.loads(p.read_text()); assert s[\"all_checks_passed\"] is True; assert s[\"unique_unit_tests\"] >= 93; assert s[\"campaign_deterministic_equal\"] is True; assert s[\"epoch_scientific_equal\"] is True"
           ' 2>&1 | tee "$RUNNER_TEMP/p068-science/console.log"
       - name: Preserve raw outputs even on failure
         if: ${{ always() }}

@@ -32,10 +32,13 @@ def packing(ins:Instance,b:int,W:int):
     if set(ins.queries)!={(v,q) for v in range(1,ins.n)}:raise ValueError('query must read every replica at one time')
     if len(ins.candidates)!=(ins.n-1)*q or any(t>q for v,t in ins.candidates):
         raise ValueError('packing requires every replica/time reset candidate through the query')
+    latest={}
+    for m in ins.messages:
+        if m.s>=ins.cutoff and m.b<=q:
+            latest[m.v]=max(latest.get(m.v,0),m.a+1)
     releases=[]
     for v in range(1,ins.n):
-        forced=[m.a+1 for m in ins.messages if m.v==v and m.s>=ins.cutoff and m.b<=q]
-        if forced:releases.append((max(forced),v))
+        if v in latest:releases.append((latest[v],v))
     releases.sort(reverse=True)
     slots=[q-W*(j//b) for j in range(len(releases))]
     violating=[j for j,((r,v),t) in enumerate(zip(releases,slots)) if r>t]
