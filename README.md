@@ -1,135 +1,100 @@
 # Bounded-Staleness Cooperative
 
-Offline certificates for a deliberately limited cooperative-index model: fixed sends, one authoritative snapshot origin, interval delivery, volatile reset/rejoin, durable captured packets, and maximum-watermark lookup batches. This is an internal research artifact, not a production index, a cryptographic attestation system, or a Coral implementation.
+Offline certificates for a cooperative-index model with fixed sends, one authoritative snapshot origin, interval delivery, volatile reset/rejoin, durable captured packets, and maximum-watermark lookup batches. This is not a production index, cryptographic attestation system, or Coral implementation.
 
-## Run from this directory
+## Requirements and quick checks
 
-The repository is self-contained. It needs a Python interpreter supporting the standard-library code and annotations used here (Python 3.10 or newer); no installation, network access, solver, GPU, third-party package, account, or manuscript directory is required. The campaign uses the POSIX `resource` module and was reproduced on Linux; other operating systems were not tested. All scientific commands below use one worker.
-
-Run the complete offline validation in a new directory:
+Run commands from this directory with Python 3.10+ and assertions enabled (no `-O` or `PYTHONOPTIMIZE`). No installation, third-party package, solver, network access, external dataset, account, GPU, or manuscript directory is needed. Full validation and campaigns require Linux/POSIX's `resource` module; the finite certificate API is separate from that measurement runner. Commands use one worker.
 
 ```sh
-python validate.py --out results/validation-run
+python -B -m unittest discover -s tests -v
+python -B -m bsci --help
 ```
 
-This command runs the suite, both pilots, all nine campaign families, the separate epoch audit, examples, documented CLI paths, and expected-failure controls. It compares deterministic records, regenerates the retained tables, and compares newly reproduced derived data after excluding only declared resource/timing observations. JSON scientific comparisons preserve types, so `true`, `1` and `1.0` are not interchangeable. It refuses existing output directories and does not overwrite the reference results. Its summary, actual command exits, resources and logs are in the selected directory. Assertions must be enabled; optimized Python validation is refused. The standalone check does not compile or inspect the manuscript.
+The current discovered suite has 93 tests. Historical reports with 86 or 87 tests describe the suite at those executions, not a current 93-test rerun.
 
-`scientific-checks.yml` schedules this check from the flat artifact repository root on Ubuntu 24.04, with a 20-minute whole-command wall limit, 4 GiB address-space cap, and raw-output upload on both success and failure. Preparing the workflow is not evidence of a completed CI run.
+## Complete isolated validation
 
-For tools with a short execution window, use bounded batches. Exit status 3 means an incomplete checkpoint, not a pass. Resume only while the source and reference inputs are unchanged; the checkpoint validates command order, expected exits and logs, but is not a content-attestation mechanism. The following four invocations completed the clean validation used here:
+Choose an output directory that does not already exist:
 
 ```sh
-python validate.py --out results/validation-run --max-commands 4
-python validate.py --out results/validation-run --resume --max-commands 4
-python validate.py --out results/validation-run --resume --max-commands 7
-python validate.py --out results/validation-run --resume --max-commands 8
+python -B validate.py --out results/validation-run
 ```
 
-These are alternatives to the unbounded invocation above, not commands to append after it. Use a new output directory for a new validation. A tool interruption within one command does not make that command complete; the unchanged-source resume reruns it unless a matching completed-command record exists. The final summary must contain `all_checks_passed: true`.
+This runs the suite, both pilots, all nine campaign families, the separate epoch audit, examples, documented CLI paths, and expected-failure controls. It compares deterministic records and derived data while excluding only declared timing/resource observations. JSON comparisons distinguish `true`, `1`, and `1.0`. Reference results are not overwritten. The selected directory contains logs, command exits/resources, and `summary.json`; completion requires `all_checks_passed: true`. No manuscript build is performed.
 
-The individual commands are also available:
+For bounded execution windows, start with `--max-commands 4`, then repeat with `--resume --max-commands 4` until complete. Exit 3 means an incomplete checkpoint, not success. Resume only with unchanged source/reference inputs. The checkpoint validates command order, expected exits, and logs; it is not content attestation. A command interrupted before its completion record is written is rerun.
+
+The scientific GitHub workflow runs this validation on Ubuntu 24.04 with a 20-minute command limit, 4 GiB address-space cap, and raw-output upload on success or failure. Each campaign child has a 1,800-second timeout. A failed command or mismatch stops reproduction.
+
+## Produce and verify certificates
+
+These examples write to a separate local-output directory, not the retained `results/examples/`:
 
 ```sh
-python -m unittest discover -s tests -v
-python pilots/initial.py --out results/pilots-reproduced/initial.json
-python pilots/compact.py --out results/pilots-reproduced/compact.json
-python examples.py --out results/examples
-python reproduce.py --out results/reproduced
-python -m bsci.summarize --results results/reproduced --out results/reproduced-derived
-python check_reproduction.py --reference results/campaign --candidate results/reproduced
-python epoch_audit.py --out results/epoch-reproduced
-python check_epoch_audit.py --reference results/epoch-audit --candidate results/epoch-reproduced
+python -B -m bsci certify inputs/case-001.json --out results/local-examples/case-001.json
+python -B -m bsci verify inputs/case-001.json --packet results/local-examples/case-001.json
+python -B -m bsci replay inputs/case-001.json --packet results/local-examples/case-001.json
+python -B -m bsci certify inputs/case-002.json --out results/local-examples/case-002.json
+python -B -m bsci verify inputs/case-002.json --packet results/local-examples/case-002.json
+python -B -m bsci universal inputs/case-003.json --k 1 --out results/local-examples/budget-one.json
+python -B -m bsci verify-universal inputs/case-003.json --k 1 --packet results/local-examples/budget-one.json
 ```
 
-The full campaign is sequential. Each family has a 1,800-second child timeout, below the 45-minute run ceiling. On the recorded environment the retained campaign consumed 7.495 CPU seconds and about 114 MiB peak process RSS. Resource observations are not portable speed guarantees. `reproduce.py` stops on a failed command; it does not turn timeouts or mismatches into passing cases. Existing output files for a selected family are overwritten, so use a new output directory when preserving another measurement.
+`verify` and `verify-universal` exit 0 for valid packets, 1 for invalid packets, and 2 for input/IO errors. `replay` requires a negative packet containing arrivals. `--optional path.json` supplies selected eligible reset pairs to `certify` and independently binds `verify` to that pattern; the default optional pattern is empty. Mandatory resets always apply. Universal CLI commands require `--k`; a budget-one proof does not establish a budget-two guarantee.
 
-The two `pilots/` scripts preserve the original pre-campaign selections and algorithms with relative output paths. Their fixed scientific counts can be compared to `results/pilot-result.json` and `results/compact-pilot-result.json`; timings, RSS, and the historical projection field are not equality targets.
-
-A family can be rerun in isolation:
-
-```sh
-python -m bsci.campaign random --out results/reproduced
-```
-
-The nine names are `random`, `overlay`, `resets`, `reduction`, `fixed`, `direct`, `periodic`, `phases`, and `scaling`. `experiment-specification.md` gives the fixed selection. `check_reproduction.py` compares every deterministic field, including the stored exact inputs and certificates; it excludes only the timing and process-RSS fields in the scaling rows. It does not equate successful reproduction with a general proof. Timing and operating-system observations will differ across runs. The clean-copy audit result is in `results/reproduction-check.json`. `results/clean-validation.json` records the current 86-test suite, complete command checks and exact pilot/example comparisons. `results/paper-data-check.json` separately records the project-level plot-data comparison. The separate epoch audit is checked in `results/epoch-reproduction-check.json`. Command-level resources and conservative charges for interrupted orchestration calls are kept separate from the original campaign timings in `results/resource-accounting.json`.
-
-To regenerate the paper's data from the retained observations rather than rerunning timings:
-
-```sh
-python -m bsci.summarize --results results/campaign --out results/derived
-```
-
-`scaling-events.csv` contains median/minimum/maximum CPU times and asymmetric error lengths for the PGFPlots figure. `phase-slice.csv` contains exact integer bounds, not estimates. Nothing in the summarizer reads the manuscript.
-
-## Produce and verify one certificate
-
-```sh
-python -m bsci certify inputs/case-001.json --out results/examples/case-001-certificate.json
-python -m bsci verify inputs/case-001.json --packet results/examples/case-001-certificate.json
-python -m bsci replay inputs/case-001.json --packet results/examples/case-001-certificate.json
-python -m bsci certify inputs/case-002.json --out results/examples/case-002-certificate.json
-python -m bsci verify inputs/case-002.json --packet results/examples/case-002-certificate.json
-python -m bsci universal inputs/case-003.json --k 1 --out results/examples/case-003-budget-one.json
-python -m bsci verify-universal inputs/case-003.json --k 1 --packet results/examples/case-003-budget-one.json
-```
-
-`verify` and `verify-universal` return status 0 for valid packets and status 1 for invalid packets; input/IO errors return status 2. `replay` is for a negative packet containing arrivals, not a positive derivation. `--optional path.json` supplies a JSON array of selected eligible reset pairs to `certify` and binds `verify` to that independently requested pattern. Without it, the selected/expected optional pattern is empty. Mandatory resets always apply. `universal` and `verify-universal` require `--k`; verification rejects a packet whose rule differs from that requested budget, even when the packet is valid for its own rule. A budget-one proof is not a budget-two guarantee.
-
-The universal CLI accepts cardinality budgets. Rolling budgets are available without another dependency through the Python interface:
+In Python, bind the requested assertion with `verify(ins, packet, expected_optional=selected)` or `verify_universal(ins, packet, expected_rule=rule)`. Omitting these arguments checks only the packet's self-described pattern/rule. Rolling families are available through this API:
 
 ```python
 import json
 from bsci.model import Instance
 from bsci.families import universal, verify_universal
-ins = Instance.from_dict(json.load(open("inputs/case-003.json")))
+with open("inputs/case-003.json") as stream:
+    ins = Instance.from_dict(json.load(stream))
 rule = {"kind": "rolling", "b": 1, "W": 2}
 packet = universal(ins, rule)
 assert verify_universal(ins, packet, expected_rule=rule)
 ```
 
-Default negative verification establishes a failing admissible execution only. It does not certify a `minimal_optional_count` field. Use `verify_universal(ins, packet, verify_minimum=True, expected_rule=rule)` to additionally enumerate every smaller admissible set. This optional minimality path uses the producer to generate fresh positive proofs; it is not an independent search implementation. It can be exponential. `examples.py` exercises this distinction.
+Ordinary negative verification checks a failing admissible execution, not `minimal_optional_count`. Set `verify_minimum=True` to enumerate every smaller admissible reset set; this can be exponential and uses the producer for fresh positive proofs, not an independent search implementation.
 
-For the Python API, always bind the requested assertion: `verify(ins, packet, expected_optional=selected)` for a fixed pattern, or `verify_universal(ins, packet, expected_rule=rule)` for a reset family. The independently supplied instance includes the cutoff and queries. Omitting these optional binding arguments deliberately checks only the packet's self-described pattern/rule; it must not be interpreted as satisfying a different request. Budget schemas have exactly their documented keys. All integer fields, including optional reset coordinates, reject booleans and floating-point encodings.
+See `FORMAT.md` for exact schemas, strict integer domains, periodic-helper restrictions, immutable finite input capture, and one-shot reset iterable handling. An iterable consumed by an earlier call must be replaced or retained as a tuple. Infinite iterables are outside the contract.
 
-## Supplemental epoch audit
+## Reproduction entrypoints and results
 
-`epoch-audit-specification.md` fixes a separate 96-case selection before execution. `epoch_audit.py` compares every node at every slot under single-packet same-epoch postponement and joint canonicalization, using a literal scalar history implementation. The retained audit checks 200 reset patterns, 432 arrival assignments, 250 individual postponements and 432 canonicalizations (239 with a stale batch); a cross-reset negative control distinguishes the invalid unrestricted rule. `check_epoch_audit.py` compares all scientific records and summaries, excluding the separate resource observations. These finite checks supplement, but do not change, the frozen nine-family campaign or its 60,026 execution denominator. The unit suite has 86 tests: 29 original checks, 13 claim-binding/type/CLI regressions, nine exact phase-domain and iterable regressions, six validation-wrapper controls, eleven immutable-instance-input regressions, seven type-preserving evidence-comparison controls, and eleven one-shot reset-capture regressions.
+Use fresh output paths: the individual campaign, example, pilot, and summarizer entrypoints can overwrite selected output files.
 
-The preceding 86-test count and the retained Linux validation reports are historical. One provenance-table regression for the published identity of *Robust Temporal Cut* gives the retained 87-method suite. Six additional packing-aggregation regressions bring the current discovered inventory to 93. Neither addition changes campaign inputs, scientific denominators, or timing plots.
+```sh
+python -B reproduce.py --out results/reproduced
+python -B -m bsci.summarize --results results/reproduced --out results/reproduced-derived
+python -B check_reproduction.py --reference results/campaign --candidate results/reproduced --out results/reproduced-check.json
+python -B epoch_audit.py --out results/epoch-reproduced
+python -B check_epoch_audit.py --reference results/epoch-audit --candidate results/epoch-reproduced --out results/epoch-reproduced-check.json
+python -B -m bsci.campaign random --out results/single-family
+```
 
-The portable finite command `python -B -m unittest discover -s tests -p test_packing_aggregation.py -v` checks twelve hand-built direct instances against a test-local slot-search reference and smaller fixtures against literal reset/arrival enumeration. It is included by the existing full CI test discovery. Packing now aggregates qualifying release maxima in one message pass, then visits replicas in the original order and retains descending release/identity sorting. All preconditions, strict arrival-plus-one semantics, first violation and witness fields remain. This is local bookkeeping reuse, not a measured speedup or a full Linux reproduction.
+The nine families are `random`, `overlay`, `resets`, `reduction`, `fixed`, `direct`, `periodic`, `phases`, and `scaling`; their selection is in `experiment-specification.md`. `pilots/initial.py` and `pilots/compact.py` retain the pre-campaign algorithms, with scientific references in `results/pilot-result.json` and `results/compact-pilot-result.json`. `examples.py` exercises the CLI/API distinctions above. Each accepts `--out`.
 
-## Scientific map
+To derive tables/plot inputs from retained observations without new timing measurements:
 
-`proofs/model-and-results.md` contains complete written arguments. The manuscript also contains the central proofs; no proof assistant is claimed. `bsci/model.py` validates instances. `certify.py` is the range-AND producer. `replay.py` independently rebuilds points, checks positive derivations by Fenwick counts, and replays negative packets with scalar watermarks; it imports no producer code. `oracle.py` provides literal per-slot scalar execution, exhaustive arrival enumeration, and expanded closure. `flow.py` is the singleton-arrival minimum-cut baseline; it shares the producer's endpoint builder. `star.py` implements the direct-replica packing and phase formulas. `families.py` explicitly enumerates quantified reset families. `campaign.py` contains the deterministic generators and assertions.
+```sh
+python -B -m bsci.summarize --results results/campaign --out results/local-derived
+```
 
-The raw results cover 60,026 exhaustive full-history arrival executions, not 60,026 independent workloads. The graph family covers all 1,099 labelled graphs through five vertices and 33,866 vertex subsets, but full arrival enumeration is only through four vertices. The phase family evaluates 53,508 zero-anchored nondecreasing multisets in 1,176 settings; these are not distinct rotational orbits. See `results/derived/summary.json` and `claim_evidence_ledger.csv` for exact scope.
+`results/derived/` is the retained comparison target. `scaling-events.csv` contains median/min/max CPU times and asymmetric error lengths; `phase-slice.csv` contains exact integer bounds. The summarizer does not read the manuscript.
 
-## Model boundaries
+The raw campaign covers 60,026 full-history arrival executions, not independent workloads. Graph reduction includes 1,099 labelled graphs through five vertices and 33,866 vertex subsets; full arrival enumeration stops at four vertices. Phase design includes 53,508 zero-anchored nondecreasing multisets in 1,176 settings, not distinct rotational orbits. The separate epoch audit covers 96 cases, 200 reset patterns, 432 arrival assignments, 250 postponements, and 432 canonicalizations; it does not change the campaign denominator. See `epoch-audit-specification.md`, `results/derived/summary.json`, and `claim_evidence_ledger.csv`.
 
-Resets erase a replica immediately before that slot's arrivals; sends happen after arrivals and queries. Payloads are captured at send time and survive subsequent endpoint resets. Every scheduled packet arrives exactly once at one independent integer time in its interval. The origin never resets or receives packets. Initial nonorigin state is -1. A snapshot watermark establishes complete information as of that time, including deletions and no-change intervals; it is not simply a last-record-update timestamp. The query returns the largest observed watermark, and -1 is failure rather than abstention.
+Retained validation/resource records remain in `results/`; `results/measurements/current-linux/` contains an Ubuntu 24.04 run with 87 tests and 23 commands, all 6,258 campaign rows, six derived scientific files, and the epoch audit. These are recorded observations, not portable speed guarantees or a claim that later tests were executed in that run.
 
-A rolling budget counts optional erasures globally across replicas, not an unavailable-node fraction. Mandatory resets are uncharged and explicit. The NP-hardness result uses a mandatory reset profile. The polynomial cut result assumes singleton arrivals and unit per-event reset cost. The direct-replica formula assumes complete per-slot reset eligibility, no mandatory resets, and a simultaneous query of all replicas. Sparse eligibility, packet loss, downtime, adaptive sending, incomplete advertisements, authentication, arbitrary membership, and Internet performance are not covered.
+## Implementation and assumptions
 
-## Provenance and limitations
+`bsci/model.py` validates inputs; `certify.py` implements range-AND closure. `replay.py` independently reconstructs points, checks positive derivations with Fenwick counts, and replays negative packets with scalar watermarks without importing the producer. `oracle.py` supplies literal per-slot execution and exhaustive arrival enumeration. `flow.py` is the singleton-arrival min-cut baseline and shares the producer's endpoint builder. `star.py` supplies direct-replica packing/phase formulas; `families.py` enumerates reset families. Written arguments are in `proofs/model-and-results.md`; finite agreement is not a mechanized proof.
 
-All experimental inputs are original synthetic instances; no external data acquisition is needed for reproduction. Scholarly resources and exact read representations are recorded in `external_resources.csv`, `literature-boundary.md`, and the 31-entry `bibliography-audit.csv`; `bibliography-audit.md` states the reading and publication-status boundaries. Scholarly papers are not redistributed. `LICENSE` and `licenses/NOTICE.md` describe permissions and attribution. No invented repository URL is supplied.
+Resets happen immediately before arrivals; sends follow arrivals and queries. Captured payloads survive endpoint resets. Each packet arrives once at an independent integer time in its interval. The origin never resets or receives packets, and nonorigin state starts at -1. A watermark means a complete authoritative as-of snapshot, including deletions and unchanged intervals, not merely a last-update timestamp. Queries return the maximum watermark; -1 is failure, not abstention.
 
-The written proofs, finite checks, measurements, second verifier and clean-copy rerun are different kinds of evidence. None constitutes independent external review.
+Rolling budgets count optional erasures globally, not unavailable-node fractions. Mandatory resets are explicit and uncharged. Hardness uses a mandatory reset profile; the polynomial cut result assumes singleton arrivals and unit per-event costs. Direct packing assumes complete per-slot reset eligibility, no mandatory resets, and simultaneous replica queries. Sparse eligibility, packet loss, downtime, adaptive sends, incomplete advertisements, authentication, arbitrary membership, and Internet performance are outside those formulas.
 
-## Exact periodic-helper inputs
+## Sources and license
 
-`bsci.star.phase_bounds(P, D, b, W, phases)` and `optimize(P, D, b, W, r)` require strictly positive integer period, maximum delay, rolling capacity, window width, and replica count. `window(P, D, phases, B, qphase)` requires integer `B >= 0` and `0 <= qphase < P`. Every phase is an integer in `[0,P)` and the collection is nonempty. Booleans, floats, strings and out-of-domain values are rejected with `ValueError`. A finite one-shot iterable of phases is captured once; list, tuple and iterator inputs then describe the same schedule. The general reset-family checker permits zero reset capacity, but these direct-star phase formulas intentionally use the proved `b >= 1` domain.
-
-The phase-interface regressions address an input-contract defect, not a new theorem or experimental family. The retained campaign supplies ordinary integer lists/tuples; its complete deterministic phase records must remain unchanged after this repair. An out-of-domain phase must not be silently interpreted as a replica with no sends.
-
-## Stable instance inputs
-
-`Instance` captures finite message, query and reset iterables once, including nested query/reset pairs, and stores immutable tuples. A caller's later list mutation cannot change a validated instance. Direct messages must be `Message` objects; use `Instance.from_dict` for JSON five-field rows. JSON root fields are exactly the documented required fields plus optional `mandatory` and `candidates`; unknown fields are rejected rather than silently ignored. Malformed rows and boolean/float aliases in integer domains raise `ValueError`. Infinite iterables are outside this finite input contract. These are input guards, not a resource quota for potentially exponential reset-family enumeration.
-
-`bsci/evidence.py` contains type-preserving result comparison and the explicit derived-data exclusion list. Original timing plots continue to use retained observations. A new timing measurement is neither required to equal the old one nor silently substituted into the paper.
-
-A retained Ubuntu 24.04 execution passes all 87 unit tests and 23 documented commands. All 6,258 campaign rows, six derived scientific files and the 96-case epoch audit reproduce, excluding only the declared resource observations. The recorded whole run takes 24.843718 wall seconds and 23.557268 child CPU seconds with 287,276 KiB peak child RSS and one worker. Its raw summaries and test output are in `results/measurements/current-linux/`, separate from historical plots; they do not establish a 93-method candidate run.
-
-
-Certificate producers, fixed-pattern and aggregate verifiers, and the exhaustive oracle capture each finite optional-reset iterable before reusing it. Nested one-shot pairs are normalized to immutable tuples. Coverage checks and proof replay therefore use the same reset pattern, and every arrival assignment in an exhaustive call uses that pattern. A caller reusing an already consumed generator in a separate API call must instead provide a new iterable or retain a tuple. The JSON certificate format remains unchanged. `tests/test_reset_capture.py` includes a two-node false-acceptance control and a one-edge gadget whose second enumerated arrival assignment is stale; these are finite interface regressions, not new campaign samples.
+Inputs are original synthetic instances; no outside dataset is required. Source identities/read scopes are retained in `external_resources.csv`, `bibliography-audit.csv`, `bibliography-audit.md`, and `literature-boundary.md`. Scholarly PDFs are not redistributed. `LICENSE` and `licenses/NOTICE.md` retain permissions, attribution, and tool-use disclosure.
